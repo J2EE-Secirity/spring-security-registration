@@ -1,6 +1,7 @@
-package org.baeldung.security.totp.util;
+package org.baeldung.security.totp;
 
 public enum Crypto {
+
     HMAC_SHA1("HmacSHA1"), HMAC_SHA256("HmacSHA256"), HMAC_SHA512("HmacSHA512");
 
     private String value;
@@ -12,4 +13,5 @@ public enum Crypto {
     public String getValue() {
         return value;
     }
+
 }
