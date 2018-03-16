@@ -87,11 +87,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         return cookieLocaleResolver;
     }
 
-    /**
-     * Configuring Encoding for properties Files
-     * *****************************************
-     * @see https://www.jetbrains.com/help/idea/configuring-encoding-for-properties-files.html
-     */
 //     @Bean
 //    public MessageSource messageSource() {
 //        final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
