@@ -10,6 +10,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.context.request.RequestContextListener;
@@ -79,7 +80,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     }
 
     // beans
-
     @Bean
     public LocaleResolver localeResolver() {
         final CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
@@ -87,15 +87,20 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         return cookieLocaleResolver;
     }
 
-    // @Bean
-    // public MessageSource messageSource() {
-    // final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-    // messageSource.setBasename("classpath:messages");
-    // messageSource.setUseCodeAsDefaultMessage(true);
-    // messageSource.setDefaultEncoding("UTF-8");
-    // messageSource.setCacheSeconds(0);
-    // return messageSource;
-    // }
+    /**
+     * Configuring Encoding for properties Files
+     * *****************************************
+     * @see https://www.jetbrains.com/help/idea/configuring-encoding-for-properties-files.html
+     */
+//     @Bean
+//    public MessageSource messageSource() {
+//        final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+//        messageSource.setBasename("classpath:messages");
+//        messageSource.setUseCodeAsDefaultMessage(true);
+//        messageSource.setDefaultEncoding("UTF-8");
+//        messageSource.setCacheSeconds(0);
+//        return messageSource;
+//    }
 
     @Bean
     public EmailValidator usernameValidator() {
