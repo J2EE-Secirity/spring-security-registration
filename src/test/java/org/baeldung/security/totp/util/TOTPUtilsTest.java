@@ -23,13 +23,19 @@ public class TOTPUtilsTest {
             System.out.println("(code) rfcOTP: " + code);
             assertEquals(getGoogleOTPCode(secret), TOTPCustomUtils.getRfcOTPCode(secret));
 
-            System.out.println("check (code): " + TOTPCustomUtils.checkCode(secret, code));
+            System.out.println("проверить (code - " + TOTPCustomUtils.getRfcOTPCode(secret) + "): " + TOTPCustomUtils.checkCode(secret, code));
+            try {
+                Thread.sleep(15000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("проверить через 15 сек. (code - " + TOTPCustomUtils.getRfcOTPCode(secret) + "): " + TOTPCustomUtils.checkCode(secret, code));
             try {
                 Thread.sleep(75000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("check (code): " + TOTPCustomUtils.checkCode(secret, code));
+            System.out.println("проверить через 75 сек. (code - " + TOTPCustomUtils.getRfcOTPCode(secret) + "): " + TOTPCustomUtils.checkCode(secret, code));
         } catch (DecoderException|GeneralSecurityException e) {
             e.printStackTrace();
         }
