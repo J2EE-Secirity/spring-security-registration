@@ -1,4 +1,4 @@
-package org.baeldung.spring;
+package org.baeldung.config;
 
 import org.baeldung.persistence.dao.UserRepository;
 import org.baeldung.security.CustomRememberMeServices;

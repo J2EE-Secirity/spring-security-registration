@@ -1,9 +1,10 @@
-package org.baeldung.spring;
+package org.baeldung.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan({ "org.baeldung.service" })
-public class ServiceConfig {
+@ComponentScan({ "org.baeldung.task" })
+public class TestTaskConfig {
+
 }
