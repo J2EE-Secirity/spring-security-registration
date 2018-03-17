@@ -4,10 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.baeldung</groupId>
-	<artifactId>spring-security-login-and-registration</artifactId>
+	<artifactId>spring-security-registration</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
 
-	<name>spring-security-login-and-registration</name>
+	<name>spring-security-registration</name>
 	<packaging>war</packaging>
 
 	<parent>
@@ -140,6 +140,24 @@
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 			<version>1.10</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.7.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.7.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-bean-validators</artifactId>
+			<version>2.7.0</version>
 		</dependency>
 	</dependencies>
 

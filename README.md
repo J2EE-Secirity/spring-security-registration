@@ -1,7 +1,7 @@
 
 * [Configuring Encoding for properties Files](https://www.jetbrains.com/help/idea/configuring-encoding-for-properties-files.html)
-* [How do I send spring csrf token from Postman rest client](https://stackoverflow.com/questions/27182701/how-do-i-send-spring-csrf-token-from-postman-rest-client) **(** [1](https://stackoverflow.com/questions/27182701/how-do-i-send-spring-csrf-token-from-postman-rest-client/35925413) [2](https://stackoverflow.com/questions/27182701/how-do-i-send-spring-csrf-token-from-postman-rest-client/28316021) **)**
-
+* [How do I send spring csrf token from Postman rest client](https://stackoverflow.com/questions/27182701/how-do-i-send-spring-csrf-token-from-postman-rest-client)  **(** [1](https://stackoverflow.com/questions/27182701/how-do-i-send-spring-csrf-token-from-postman-rest-client/35925413) [2](https://stackoverflow.com/questions/27182701/how-do-i-send-spring-csrf-token-from-postman-rest-client/28316021) **)**
+* [Adding Swagger UI support to Spring Boot REST API Project](https://unmesh.me/2017/01/01/adding-swagger-ui-support-to-spring-boot-rest-api-project)  **(** [1](https://stackoverflow.com/questions/37671125/how-to-configure-spring-security-to-allow-swagger-url-to-be-accessed-without-aut) [2](https://stackoverflow.com/questions/29897685/not-able-to-get-springfox-swagger-ui-working-with-spring-mvc) [3](https://github.com/springfox/springfox/issues/983) **)**
 
 ### Build and Deploy the Project
 ```
