@@ -2,8 +2,8 @@ package org.baeldung.web.rest;
 
 import org.apache.commons.codec.DecoderException;
 import org.baeldung.service.AuthCustomer2FAService;
-import org.baeldung.web.dto.AuthCodeDTO;
-import org.baeldung.web.dto.AuthUserDTO;
+import org.baeldung.web.dto.AuthCode;
+import org.baeldung.persistence.model.AuthUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,47 +28,49 @@ import java.security.GeneralSecurityException;
 @RequestMapping("/api")
 public class AuthCustomer2FAResource {
 
+    private static final String COOKIE_TOKEN_2FA = "token";
+
     @Autowired
     private AuthCustomer2FAService authCustomer2FAService;
 
     @PostMapping(value = "/authentication")
     public ResponseEntity<String> authentication(
 //            @ApiParam(required = true,
-//                    name = "authUserDTO",
-//                    value = "authUserDTO",
+//                    name = "authUser",
+//                    value = "authUser",
 //                    defaultValue = "{\"login\":\"test@test.com\",\"password\":\"test\",\"notifyBy\":\"GOOGLE_EMAIL\"}",
 //                    example = "{\"login\":\"test@test.com\",\"password\":\"test\",\"notifyBy\":\"GOOGLE_EMAIL\"}",
 //                    examples = @Example({
 //                        @ExampleProperty(mediaType = "application/json",
 //                                value = "{\"login\":\"test@test.com\",\"password\":\"test\",\"notifyBy\":\"GOOGLE_EMAIL\"}")}))
-                @Validated @RequestBody AuthUserDTO authUserDTO,
+                @Validated @RequestBody AuthUser authUser,
                 BindingResult bindingResult,
                 HttpServletResponse response) {
         if (!bindingResult.hasErrors()) {
             String token = null;
             try {
-                token = authCustomer2FAService.authentication(authUserDTO);
+                token = authCustomer2FAService.authentication(authUser);
                 if (token!=null) {
-                    response.addCookie(newCookie("token", token));
-                    return new ResponseEntity<>("Authentication successful!", HttpStatus.OK);
+                    response.addCookie(newCookie(COOKIE_TOKEN_2FA, token));
+                    return new ResponseEntity<>("The verification code was sent to You on " + authUser.getNotifyBy(), HttpStatus.OK);
                 }
             } catch (DecoderException|GeneralSecurityException e) {
             }
-            return new ResponseEntity<>("Authentication failed...", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Authentication failed!", HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping(value = "/authenticated")
-    public ResponseEntity<AuthUserDTO> authenticated(@CookieValue(value = "token") String token,
-                                                     @RequestBody AuthCodeDTO authCodeDTO,
-                                                     BindingResult bindingResult) {
+    public ResponseEntity<AuthUser> authenticated(@CookieValue(value = COOKIE_TOKEN_2FA) String token,
+                                                  @RequestBody AuthCode authCode,
+                                                  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             if (token!=null) {
                 try {
-                    AuthUserDTO authUserDTO = authCustomer2FAService.authenticated2fa(token, authCodeDTO);
-                    return authUserDTO != null
-                            ? new ResponseEntity<>(authUserDTO, HttpStatus.OK)
+                    AuthUser authUser = authCustomer2FAService.authenticated2fa(token, authCode);
+                    return authUser != null
+                            ? new ResponseEntity<>(authUser, HttpStatus.OK)
                             : new ResponseEntity<>(HttpStatus.FORBIDDEN);
                 } catch (DecoderException|GeneralSecurityException e) {
                 }

@@ -1,6 +1,6 @@
-package org.baeldung.web.dto;
+package org.baeldung.persistence.model;
 
-public enum  TypeNotify {
+public enum NotifyType {
 
     PHONE_SMS("phone sms"),
     MAIL_EMAIL("mail email"),
@@ -12,7 +12,7 @@ public enum  TypeNotify {
 
     private String type;
 
-    TypeNotify(String type) {
+    NotifyType(String type) {
         this.type = type;
     }
 

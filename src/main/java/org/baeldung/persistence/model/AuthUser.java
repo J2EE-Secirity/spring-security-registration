@@ -1,11 +1,11 @@
-package org.baeldung.web.dto;
+package org.baeldung.persistence.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-public class AuthUserDTO implements Serializable {
+public class AuthUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -16,7 +16,7 @@ public class AuthUserDTO implements Serializable {
     private String password;
 
     @NotNull
-    private TypeNotify notifyBy;
+    private NotifyType notifyBy;
 
     @JsonIgnore
     private String secret;
@@ -37,11 +37,11 @@ public class AuthUserDTO implements Serializable {
         this.password = password;
     }
 
-    public TypeNotify getNotifyBy() {
+    public NotifyType getNotifyBy() {
         return notifyBy;
     }
 
-    public void setNotifyBy(TypeNotify notifyBy) {
+    public void setNotifyBy(NotifyType notifyBy) {
         this.notifyBy = notifyBy;
     }
 
@@ -59,7 +59,7 @@ public class AuthUserDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "AuthUserDTO{" +
+        return "AuthUser{" +
                 "login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", notifyBy=" + notifyBy +

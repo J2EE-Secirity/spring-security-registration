@@ -1,8 +1,9 @@
 package org.baeldung.web.dto;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
-public class AuthCodeDTO {
+public class AuthCode implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -19,7 +20,7 @@ public class AuthCodeDTO {
 
     @Override
     public String toString() {
-        return "AuthCodeDTO{" +
+        return "AuthCode{" +
                 "code='" + code + '\'' +
                 '}';
     }
