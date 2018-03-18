@@ -26,3 +26,9 @@ mysql -u root -p
 Вы также можете настроить почтовый сервер локально. Подробнее см.  "email.properties.localhost.sample"
 ### AuthenticationSuccessHandler configuration for Custom Login Page article
 If you want to activate the configuration for the article [Custom Login Page for Returning User](http://www.baeldung.com/custom-login-page-for-returning-user), then you need to comment the @Component("myAuthenticationSuccessHandler") annotation in the MySimpleUrlAuthenticationSuccessHandler and uncomment the same in MyCustomLoginAuthenticationSuccessHandler.
+
+
+
+
+* `@Entity VerificationToken2FA` https://vladmihalcea.com/the-best-way-to-map-a-onetoone-relationship-with-jpa-and-hibernate
+* `?` https://stackoverflow.com/questions/34728144/spring-boot-binding-and-validation-error-handling-in-rest-controller

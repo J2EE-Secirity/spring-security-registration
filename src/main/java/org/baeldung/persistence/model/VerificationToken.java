@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 public class VerificationToken {
 
-    private static final int EXPIRATION = 60 * 24;
+    private static final int EXPIRATION = 1; // 60 * 24 // ( <минуты> * <часы> )
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

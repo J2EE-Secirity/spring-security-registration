@@ -74,6 +74,7 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(final WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security", "/swagger-ui.html", "/webjars/**");
         web.ignoring().antMatchers("/resources/**");
+        web.ignoring().antMatchers("/api/**");
     }
 
     @Override
@@ -83,6 +84,7 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll() // whitelist Swagger UI resources
+                .antMatchers("/api/authentication1").permitAll()
                 .antMatchers("/login*","/login*", "/logout*", "/signin/**", "/signup/**", "/customLogin",
                         "/user/registration*", "/registrationConfirm*", "/expiredAccount*", "/registration*",
                         "/badUser*", "/user/resendRegistrationToken*" ,"/forgetPassword*", "/user/resetPassword*",
