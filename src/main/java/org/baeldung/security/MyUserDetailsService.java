@@ -7,9 +7,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.baeldung.persistence.dao.UserRepository;
+import org.baeldung.persistence.model.AuthUser2FA;
 import org.baeldung.persistence.model.Privilege;
 import org.baeldung.persistence.model.Role;
 import org.baeldung.persistence.model.User;
+import org.baeldung.service.AuthCustomer2FAService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,6 +34,9 @@ public class MyUserDetailsService implements UserDetailsService {
     @Autowired
     private HttpServletRequest request;
 
+    @Autowired
+    private AuthCustomer2FAService authCustomer2FAService;
+
     public MyUserDetailsService() {
         super();
     }
@@ -45,6 +50,14 @@ public class MyUserDetailsService implements UserDetailsService {
         }
 
         try {
+            /**
+             * The case to 2FA Verification
+             */
+            final AuthUser2FA user2fa = authCustomer2FAService.findByLogin(email);
+            if (user2fa == null) {
+                throw new UsernameNotFoundException("No user found with username: " + email);
+            }
+
             final User user = userRepository.findByEmail(email);
             if (user == null) {
                 throw new UsernameNotFoundException("No user found with username: " + email);

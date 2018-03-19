@@ -2,7 +2,7 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd"
          updateCheck="true" monitoring="autodetect" dynamicConfig="true">
 
-    <cache name="tasks"
+    <cache name="2fa"
            maxElementsInMemory="100" eternal="false"
            overflowToDisk="false"
            timeToLiveSeconds="120" timeToIdleSeconds="0"

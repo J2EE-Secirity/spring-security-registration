@@ -11,13 +11,19 @@ public class AuthCustomer2FARepository {
 
     private final Logger logger = LoggerFactory.getLogger(AuthCustomer2FARepository.class);
 
-    @Cacheable(cacheNames = "tasks", key = "#token")
+    @Cacheable(cacheNames = "2fa", key = "#login")
+    public AuthUser2FA findByLogin(String login, AuthUser2FA user) {
+        logger.debug("> load user by login to cache (when the user was confirm authentication)");
+        return user;
+    }
+
+    @Cacheable(cacheNames = "2fa", key = "#token")
     public AuthUser2FA findByToken(String token, AuthUser2FA user) {
         logger.debug("> load user by token to cache (when the user was successfully authentication)");
         return user;
     }
 
-    @Cacheable(cacheNames = "tasks", key = "#code")
+    @Cacheable(cacheNames = "2fa", key = "#code")
     public AuthUser2FA findByCode(long code, AuthUser2FA user) {
         logger.debug("> load user by code to cache (when the user was confirm authentication)");
         return user;

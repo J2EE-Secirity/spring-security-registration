@@ -36,12 +36,12 @@ public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
 //        }
 
         /**
-         * The case to 2FA Verification
+         * The case to 2FA Verification ?????????
          */
-        final long verificationCode = Long.valueOf(((CustomWebAuthenticationDetails) auth.getDetails()).getVerificationCode());
-        if (authCustomer2FAService.findByCode(verificationCode)==null) {
-            throw new BadCredentialsException("Invalid verfication code");
-        }
+//        final long verificationCode = Long.valueOf(((CustomWebAuthenticationDetails) auth.getDetails()).getVerificationCode());
+//        if (authCustomer2FAService.findByCode(verificationCode)==null) {
+//            throw new BadCredentialsException("Invalid verfication code");
+//        }
 
         final Authentication result = super.authenticate(auth);
         return new UsernamePasswordAuthenticationToken(user, result.getCredentials(), result.getAuthorities());

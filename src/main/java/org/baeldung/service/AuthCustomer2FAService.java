@@ -29,7 +29,7 @@ public class AuthCustomer2FAService {
     private UserRepository repository;
 
     @Autowired
-    private AuthCustomer2FARepository authCustomer2faRepository;
+    private AuthCustomer2FARepository customer2faRepository;
 
     public String getTokenAuthentication(AuthUser2FA user2fa) throws DecoderException, GeneralSecurityException {
         Optional<User> user = findByUser(user2fa);
@@ -37,7 +37,8 @@ public class AuthCustomer2FAService {
             String token = UUID.randomUUID().toString();
             String secret = TOTPCustomUtils.generateSecret();
             user2fa.setSecretKey(secret);
-            authCustomer2faRepository.findByToken(token, user2fa);
+            customer2faRepository.findByToken(token, user2fa);
+            customer2faRepository.findByLogin(user2fa.getLogin(), user2fa);
             logger.debug(">>> to You send a verification CODE: {}", TOTPCustomUtils.getRfcOTPCode(secret));
             return token;
         }
@@ -48,7 +49,7 @@ public class AuthCustomer2FAService {
         AuthUser2FA user = findByToken(token);
         if (user != null
                 && TOTPCustomUtils.checkCode(user.getSecretKey(), code.getVerficationCode())) {
-            authCustomer2faRepository.findByCode(code.getVerficationCode(), user);
+            customer2faRepository.findByCode(code.getVerficationCode(), user);
             return true;
         }
         return false;
@@ -68,12 +69,18 @@ public class AuthCustomer2FAService {
     public AuthUser2FA findByToken(String token) {
         logger.debug("> Step #2: get successfully authentication to user by token from cache");
 
-        return authCustomer2faRepository.findByToken(token, null);
+        return customer2faRepository.findByToken(token, null);
+    }
+
+    public AuthUser2FA findByLogin(String login) {
+        logger.debug("> Step #2: get authorization to user by login from cache");
+
+        return customer2faRepository.findByLogin(login, null);
     }
 
     public AuthUser2FA findByCode(long code) {
         logger.debug("> Step #3: get authorization to user by code from cache");
 
-        return authCustomer2faRepository.findByCode(code, null);
+        return customer2faRepository.findByCode(code, null);
     }
 }
