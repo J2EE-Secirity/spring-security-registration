@@ -29,7 +29,7 @@ public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
         // to verify verification code
 //        if (user.isUsing2FA()) {
 //            final String verificationCode = ((CustomWebAuthenticationDetails) auth.getDetails()).getVerificationCode();
-//            final Totp totp = new Totp(user.getSecret());
+//            final Totp totp = new Totp(user.getSecretKey());
 //            if (!isValidLong(verificationCode) || !totp.verify(verificationCode)) {
 //                throw new BadCredentialsException("Invalid verfication code");
 //            }

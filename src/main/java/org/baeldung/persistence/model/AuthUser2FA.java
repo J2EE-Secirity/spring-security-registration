@@ -19,7 +19,7 @@ public class AuthUser2FA implements Serializable {
     private NotifyType2FA notifyBy;
 
     @JsonIgnore
-    private String secret;
+    private String secretKey;
 
     public String getLogin() {
         return login;
@@ -49,12 +49,12 @@ public class AuthUser2FA implements Serializable {
         return serialVersionUID;
     }
 
-    public String getSecret() {
-        return secret;
+    public String getSecretKey() {
+        return secretKey;
     }
 
-    public void setSecret(String secret) {
-        this.secret = secret;
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class AuthUser2FA implements Serializable {
                 "login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", notifyBy=" + notifyBy +
-                ", secret=" + secret +
+                ", secretKey=" + secretKey +
                 '}';
     }
 }

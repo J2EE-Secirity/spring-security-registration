@@ -8,20 +8,20 @@ public class AuthCode2FA implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
-    private long code;
+    private long verficationCode;
 
-    public long getCode() {
-        return code;
+    public long getVerficationCode() {
+        return verficationCode;
     }
 
-    public void setCode(long code) {
-        this.code = code;
+    public void setVerficationCode(long verficationCode) {
+        this.verficationCode = verficationCode;
     }
 
     @Override
     public String toString() {
         return "AuthCode2FA{" +
-                "code='" + code + '\'' +
+                "verficationCode='" + verficationCode + '\'' +
                 '}';
     }
 }

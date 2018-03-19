@@ -36,9 +36,9 @@ public class AuthCustomer2FAService {
         if (user.isPresent()) {
             String token = UUID.randomUUID().toString();
             String secret = TOTPCustomUtils.generateSecret();
-            user2fa.setSecret(secret);
+            user2fa.setSecretKey(secret);
             authCustomer2faRepository.findByToken(token, user2fa);
-            logger.debug(">>> You to send a verification CODE: {}", TOTPCustomUtils.getRfcOTPCode(secret));
+            logger.debug(">>> to You send a verification CODE: {}", TOTPCustomUtils.getRfcOTPCode(secret));
             return token;
         }
         return null;
@@ -47,8 +47,8 @@ public class AuthCustomer2FAService {
     public boolean getUserConfirmAuthentication(String token, AuthCode2FA code) throws DecoderException, GeneralSecurityException {
         AuthUser2FA user = findByToken(token);
         if (user != null
-                && TOTPCustomUtils.checkCode(user.getSecret(), code.getCode())) {
-            authCustomer2faRepository.findByCode(code.getCode(), user);
+                && TOTPCustomUtils.checkCode(user.getSecretKey(), code.getVerficationCode())) {
+            authCustomer2faRepository.findByCode(code.getVerficationCode(), user);
             return true;
         }
         return false;
