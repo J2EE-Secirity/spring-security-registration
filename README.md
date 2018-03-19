@@ -32,3 +32,4 @@ If you want to activate the configuration for the article [Custom Login Page for
 
 * `@Entity VerificationToken2FA` https://vladmihalcea.com/the-best-way-to-map-a-onetoone-relationship-with-jpa-and-hibernate
 * `?` https://stackoverflow.com/questions/34728144/spring-boot-binding-and-validation-error-handling-in-rest-controller
+* `How do I send spring csrf token from Postman rest client?` https://stackoverflow.com/questions/27182701/how-do-i-send-spring-csrf-token-from-postman-rest-client

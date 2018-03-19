@@ -38,6 +38,7 @@ public class AuthCustomer2FAService {
             String secret = TOTPCustomUtils.generateSecret();
             user2fa.setSecretKey(secret);
             customer2faRepository.findByToken(token, user2fa);
+            customer2faRepository.findByLogin(user2fa.getLogin(), user2fa);
             logger.debug(">>> to You send a verification CODE: {}", TOTPCustomUtils.getRfcOTPCode(secret));
             return token;
         }
@@ -71,15 +72,16 @@ public class AuthCustomer2FAService {
         return customer2faRepository.findByToken(token, null);
     }
 
+    public AuthUser2FA findByLogin(String login) {
+        logger.debug("> Step #2: get authorization to user by login from cache");
+
+        return customer2faRepository.findByLogin(login, null);
+    }
+
     public AuthUser2FA findByCode(long code) {
         logger.debug("> Step #3: get authorization to user by code from cache");
 
         return customer2faRepository.findByCode(code, null);
     }
 
-    public AuthUser2FA findByLogin(String login) {
-        logger.debug("> Step #3: get authorization to user by login from cache");
-
-        return customer2faRepository.findByLogin(login, null);
-    }
 }
