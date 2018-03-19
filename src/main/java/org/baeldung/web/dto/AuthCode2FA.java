@@ -3,7 +3,7 @@ package org.baeldung.web.dto;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-public class AuthCode implements Serializable {
+public class AuthCode2FA implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,7 +20,7 @@ public class AuthCode implements Serializable {
 
     @Override
     public String toString() {
-        return "AuthCode{" +
+        return "AuthCode2FA{" +
                 "code='" + code + '\'' +
                 '}';
     }

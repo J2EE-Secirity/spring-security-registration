@@ -1,12 +1,16 @@
 package org.baeldung.web.rest;
 
 import org.apache.commons.codec.DecoderException;
+import org.baeldung.persistence.model.AuthUser2FA;
 import org.baeldung.service.AuthCustomer2FAService;
-import org.baeldung.web.dto.AuthCode;
-import org.baeldung.persistence.model.AuthUser;
+import org.baeldung.web.dto.AuthCode2FA;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,51 +32,58 @@ import java.security.GeneralSecurityException;
 @RequestMapping("/api")
 public class AuthCustomer2FAResource {
 
-    private static final String COOKIE_TOKEN_2FA = "token";
+    private final Logger logger = LoggerFactory.getLogger(AuthCustomer2FAResource.class);
+
+    /**
+     * 2FA Cache Name
+     */
+    private static final String TOKEN_2FA_NAME = "2FA-AUTH-TOKEN";
+    /**
+     * Cache Expire Time
+     * <sec.> * <min.>
+     */
+    private static final int TOKEN_2FA_EXPIRE = 60 * 2;
 
     @Autowired
-    private AuthCustomer2FAService authCustomer2FAService;
+    private AuthCustomer2FAService service;
 
     @PostMapping(value = "/authentication")
     public ResponseEntity<String> authentication(
 //            @ApiParam(required = true,
-//                    name = "authUser",
-//                    value = "authUser",
+//                    name = "authUser2FA",
+//                    value = "authUser2FA",
 //                    defaultValue = "{\"login\":\"test@test.com\",\"password\":\"test\",\"notifyBy\":\"GOOGLE_EMAIL\"}",
 //                    example = "{\"login\":\"test@test.com\",\"password\":\"test\",\"notifyBy\":\"GOOGLE_EMAIL\"}",
 //                    examples = @Example({
 //                        @ExampleProperty(mediaType = "application/json",
 //                                value = "{\"login\":\"test@test.com\",\"password\":\"test\",\"notifyBy\":\"GOOGLE_EMAIL\"}")}))
-                @Validated @RequestBody AuthUser authUser,
-                BindingResult bindingResult,
-                HttpServletResponse response) {
-        if (!bindingResult.hasErrors()) {
-            String token = null;
+            @Validated @RequestBody AuthUser2FA user,
+            BindingResult binding,
+            HttpServletResponse response) {
+        if (!binding.hasErrors()) {
             try {
-                token = authCustomer2FAService.authentication(authUser);
-                if (token!=null) {
-                    response.addCookie(newCookie(COOKIE_TOKEN_2FA, token));
-                    return new ResponseEntity<>("The verification code was sent to You on " + authUser.getNotifyBy(), HttpStatus.OK);
-                }
-            } catch (DecoderException|GeneralSecurityException e) {
+                response.addCookie(newCookie(user));
+                return new ResponseEntity<>("The verification code was sent to You on " + user.getNotifyBy(), HttpStatus.OK);
+            } catch (Exception e) {
+                logger.error(e.getLocalizedMessage());
             }
             return new ResponseEntity<>("Authentication failed!", HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping(value = "/authenticated")
-    public ResponseEntity<AuthUser> authenticated(@CookieValue(value = COOKIE_TOKEN_2FA) String token,
-                                                  @RequestBody AuthCode authCode,
-                                                  BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) {
-            if (token!=null) {
+    @PostMapping(value = "/confirm-authentication")
+    public ResponseEntity<String> confirmAuthentication(@CookieValue(value = TOKEN_2FA_NAME) String token,
+                                                             @RequestBody AuthCode2FA code,
+                                                             BindingResult binding) {
+        if (!binding.hasErrors()) {
+            if (!StringUtils.isEmpty(token)) {
                 try {
-                    AuthUser authUser = authCustomer2FAService.authenticated2fa(token, authCode);
-                    return authUser != null
-                            ? new ResponseEntity<>(authUser, HttpStatus.OK)
+                    return service.getUserConfirmAuthentication(token, code)
+                            ? new ResponseEntity<>("You have successfully authenticated!", HttpStatus.OK)
                             : new ResponseEntity<>(HttpStatus.FORBIDDEN);
-                } catch (DecoderException|GeneralSecurityException e) {
+                } catch (Exception e) {
+                    logger.error(e.getLocalizedMessage());
                 }
             }
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -80,9 +91,13 @@ public class AuthCustomer2FAResource {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    private Cookie newCookie(String key, String value) {
-        Cookie cookie = new Cookie(key, value);
-        cookie.setMaxAge(60);
-        return cookie;
+    private Cookie newCookie(AuthUser2FA user) throws DecoderException, GeneralSecurityException, BadCredentialsException {
+        String token = service.getTokenAuthentication(user);
+        if (!StringUtils.isEmpty(token)) {
+            Cookie cookie = new Cookie(TOKEN_2FA_NAME, token);
+            cookie.setMaxAge(TOKEN_2FA_EXPIRE);
+            return cookie;
+        }
+        throw new BadCredentialsException("Invalid verfication");
     }
 }

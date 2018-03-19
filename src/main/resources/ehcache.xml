@@ -5,7 +5,7 @@
     <cache name="tasks"
            maxElementsInMemory="100" eternal="false"
            overflowToDisk="false"
-           timeToLiveSeconds="20" timeToIdleSeconds="0"
+           timeToLiveSeconds="120" timeToIdleSeconds="0"
            memoryStoreEvictionPolicy="LFU" transactionalMode="off">
     </cache>
 </ehcache>

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-public class AuthUser implements Serializable {
+public class AuthUser2FA implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -16,7 +16,7 @@ public class AuthUser implements Serializable {
     private String password;
 
     @NotNull
-    private NotifyType notifyBy;
+    private NotifyType2FA notifyBy;
 
     @JsonIgnore
     private String secret;
@@ -37,11 +37,11 @@ public class AuthUser implements Serializable {
         this.password = password;
     }
 
-    public NotifyType getNotifyBy() {
+    public NotifyType2FA getNotifyBy() {
         return notifyBy;
     }
 
-    public void setNotifyBy(NotifyType notifyBy) {
+    public void setNotifyBy(NotifyType2FA notifyBy) {
         this.notifyBy = notifyBy;
     }
 
@@ -59,7 +59,7 @@ public class AuthUser implements Serializable {
 
     @Override
     public String toString() {
-        return "AuthUser{" +
+        return "AuthUser2FA{" +
                 "login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", notifyBy=" + notifyBy +
