@@ -66,11 +66,6 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authProvider());
-    }
-
-    @Override
     public void configure(final WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security", "/swagger-ui.html", "/webjars/**");
         web.ignoring().antMatchers("/resources/**");
@@ -116,6 +111,13 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
              .and()
                 .rememberMe().rememberMeServices(rememberMeServices()).key("theKey");
     // @formatter:on
+    }
+
+
+
+    @Override
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authProvider());
     }
 
     // beans
