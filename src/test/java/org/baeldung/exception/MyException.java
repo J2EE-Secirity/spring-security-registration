@@ -91,6 +91,7 @@ public class MyException {
                 .forEach(m -> messages.putAll(m));
         return messages;
 
+        ////////////////////////////
 //        Stream<Map<String, String>> mapStream = Stream.of(params).map(param ->
 //                Stream.of(ex.headers).collect(
 //                        Collectors.toMap(k -> param, v -> getMessage(v.get(param)))))
